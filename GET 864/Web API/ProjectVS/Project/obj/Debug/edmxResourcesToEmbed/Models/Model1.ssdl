@@ -1,0 +1,171 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="FinanceModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Admin">
+    <Key>
+      <PropertyRef Name="AdminId" />
+    </Key>
+    <Property Name="AdminId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="30" Nullable="false" />
+  </EntityType>
+  <EntityType Name="BankDetails">
+    <Key>
+      <PropertyRef Name="AccountNumber" />
+    </Key>
+    <Property Name="AccountNumber" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="BankName" Type="varchar" MaxLength="30" />
+    <Property Name="BankIFSC" Type="varchar" MaxLength="30" />
+  </EntityType>
+  <EntityType Name="CardDetails">
+    <Key>
+      <PropertyRef Name="CardID" />
+    </Key>
+    <Property Name="CardID" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Validity" Type="date" Nullable="false" />
+    <Property Name="CardType" Type="varchar" MaxLength="20" Nullable="false" />
+    <Property Name="ActivationStatus" Type="bit" Nullable="false" />
+    <Property Name="TotalCredit" Type="int" />
+    <Property Name="RemainingCredit" Type="int" />
+    <Property Name="EMIPendingStatus" Type="bit" />
+    <Property Name="CustomerID" Type="int" />
+  </EntityType>
+  <EntityType Name="Products">
+    <Key>
+      <PropertyRef Name="ProductID" />
+    </Key>
+    <Property Name="ProductID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductName" Type="varchar" MaxLength="30" />
+    <Property Name="ProductDetails" Type="varchar" MaxLength="100" />
+    <Property Name="Amount" Type="int" />
+    <Property Name="ImagePath" Type="varchar" MaxLength="50" />
+    <Property Name="ProcessingFee" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="PurchaseDetails">
+    <Key>
+      <PropertyRef Name="PurchaseID" />
+    </Key>
+    <Property Name="PurchaseID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ProductID" Type="int" />
+    <Property Name="CardID" Type="varchar" MaxLength="10" />
+    <Property Name="PurchaseDate" Type="datetime" />
+    <Property Name="CustomerID" Type="int" />
+    <Property Name="EmiScheme" Type="int" />
+    <Property Name="EmiPerMonth" Type="float" />
+    <Property Name="EmiPaid" Type="float" />
+    <Property Name="EmiLeft" Type="float" />
+    <Property Name="PaidForMonth" Type="varchar" MaxLength="5" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+    <Property Name="principal_id" Type="int" Nullable="false" />
+    <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="version" Type="int" />
+    <Property Name="definition" Type="varbinary(max)" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="CustomerID" />
+    </Key>
+    <Property Name="CustomerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Username" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="Password" Type="varchar" MaxLength="1000" />
+    <Property Name="AccountNumber" Type="varchar" MaxLength="30" />
+    <Property Name="Firstname" Type="varchar" MaxLength="30" />
+    <Property Name="LastName" Type="varchar" MaxLength="30" />
+    <Property Name="Phoneno" Type="varchar" MaxLength="20" />
+    <Property Name="EmailID" Type="varchar" MaxLength="30" />
+    <Property Name="Address" Type="varchar" MaxLength="100" />
+  </EntityType>
+  <Association Name="FK__CardDetai__Custo__412EB0B6">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="CardDetails" Type="Self.CardDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="CardDetails">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PurchaseD__CardI__44FF419A">
+    <End Role="CardDetails" Type="Self.CardDetails" Multiplicity="0..1" />
+    <End Role="PurchaseDetails" Type="Self.PurchaseDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CardDetails">
+        <PropertyRef Name="CardID" />
+      </Principal>
+      <Dependent Role="PurchaseDetails">
+        <PropertyRef Name="CardID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PurchaseD__Custo__45F365D3">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="PurchaseDetails" Type="Self.PurchaseDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="CustomerID" />
+      </Principal>
+      <Dependent Role="PurchaseDetails">
+        <PropertyRef Name="CustomerID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__PurchaseD__Produ__440B1D61">
+    <End Role="Products" Type="Self.Products" Multiplicity="0..1" />
+    <End Role="PurchaseDetails" Type="Self.PurchaseDetails" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Products">
+        <PropertyRef Name="ProductID" />
+      </Principal>
+      <Dependent Role="PurchaseDetails">
+        <PropertyRef Name="ProductID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__AccountNu__3E52440B">
+    <End Role="BankDetails" Type="Self.BankDetails" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="BankDetails">
+        <PropertyRef Name="AccountNumber" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="AccountNumber" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="FinanceModelStoreContainer">
+    <EntitySet Name="Admin" EntityType="Self.Admin" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="BankDetails" EntityType="Self.BankDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="CardDetails" EntityType="Self.CardDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="PurchaseDetails" EntityType="Self.PurchaseDetails" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Users" EntityType="Self.Users" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__CardDetai__Custo__412EB0B6" Association="Self.FK__CardDetai__Custo__412EB0B6">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="CardDetails" EntitySet="CardDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PurchaseD__CardI__44FF419A" Association="Self.FK__PurchaseD__CardI__44FF419A">
+      <End Role="CardDetails" EntitySet="CardDetails" />
+      <End Role="PurchaseDetails" EntitySet="PurchaseDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PurchaseD__Custo__45F365D3" Association="Self.FK__PurchaseD__Custo__45F365D3">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="PurchaseDetails" EntitySet="PurchaseDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__PurchaseD__Produ__440B1D61" Association="Self.FK__PurchaseD__Produ__440B1D61">
+      <End Role="Products" EntitySet="Products" />
+      <End Role="PurchaseDetails" EntitySet="PurchaseDetails" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__AccountNu__3E52440B" Association="Self.FK__Users__AccountNu__3E52440B">
+      <End Role="BankDetails" EntitySet="BankDetails" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

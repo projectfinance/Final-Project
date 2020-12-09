@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="1c5ab6d65d6540d089fc420ff84f47c8" Name="Diagram1">
+        <EntityTypeShape EntityType="FinanceModel.Admin" Width="1.5" PointX="0.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceModel.BankDetail" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceModel.CardDetail" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceModel.Product" Width="1.5" PointX="5.25" PointY="5.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceModel.PurchaseDetail" Width="1.5" PointX="7.5" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceModel.sysdiagram" Width="1.5" PointX="7.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="FinanceModel.User" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <AssociationConnector Association="FinanceModel.FK__Users__AccountNu__3E52440B" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceModel.FK__CardDetai__Custo__412EB0B6" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceModel.FK__PurchaseD__CardI__44FF419A" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceModel.FK__PurchaseD__Produ__440B1D61" ManuallyRouted="false" />
+        <AssociationConnector Association="FinanceModel.FK__PurchaseD__Custo__45F365D3" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
