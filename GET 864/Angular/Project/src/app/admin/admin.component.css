@@ -1,0 +1,12 @@
+td, th{
+    text-align: center;
+    font-family: Calibri;
+}
+
+table{
+    border: 2px solid black;
+}
+
+.admincontainer{
+    margin: 3%;
+}

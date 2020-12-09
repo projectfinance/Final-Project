@@ -1,0 +1,127 @@
+<div class="container">
+    <div class="mycontainer">
+        <div class="display-4">
+            <div><i class="fa fa-book"></i>
+                Registration Form
+            </div>
+        </div>
+        <hr class="my-4">
+        <form #signUpForm="ngForm" (ngSubmit)="signUpForm.valid && onSubmit(signUpForm)">
+            <div class="form-group">
+                <div class="form-group">
+                    <label for="FirstName">FirstName</label>
+                    <input type="text" #FirstName="ngModel" [class.is-invalid]="FirstName.invalid && FirstName.touched"
+                        class="form-control" required [(ngModel)]="userService.selectedUser.FirstName" name="FirstName"
+                        required style="display: inline;">
+                    <div>
+                        <small class="text-danger" [class.d-none]="FirstName.valid || FirstName.untouched">First Name is
+                            required</small>
+                    </div>                   
+                </div>
+
+                <div class="form-group">
+                    <label for="LastName">LastName</label>
+                    <input type="text" required #LastName="ngModel"
+                        [class.is-invalid]="LastName.invalid && LastName.touched" class="form-control"
+                        [(ngModel)]="userService.selectedUser.LastName" name="LastName" required
+                        style="display: inline;">
+                    <div>
+                        <small class="text-danger" [class.d-none]="LastName.valid || LastName.untouched">Last Name is
+                            required</small>
+                    </div>                   
+                </div>
+
+                <div class="form-group">
+                    <label for="Username">UserName</label>
+                    <input type="text" #Username="ngModel" class="form-control" required minlength="6"
+                        [(ngModel)]="userService.selectedUser.Username" name="UserName" required
+                        style="display: inline;">
+                    <div *ngIf="Username.invalid && (Username.dirty  || Username.touched)" class="alert alert danger">
+                        <small [class.d-none]="Username.valid || Username.untouched" class="text-danger"
+                            *ngIf="Username.errors.required">Username is required</small>
+                        <small [class.d-none]="Username.valid || Username.untouched" class="text-danger"
+                            *ngIf="Username.errors.minlength">Username must be of minimum 6 characters</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Password">Password</label>
+                    <input type="password" #Password="ngModel" class="form-control" name="Password" required
+                        minlength="6" [(ngModel)]="userService.selectedUser.Password" required style="display: inline;">
+                    <div *ngIf="Password.invalid && (Password.dirty  || Password.touched)" class="alert alert danger">
+                        <small [class.d-none]="Password.valid || Password.untouched" class="text-danger"
+                            *ngIf="Password.errors.required">Password is required</small>
+                        <small [class.d-none]="Password.valid || Password.untouched" class="text-danger"
+                            *ngIf="Password.errors.minlength">Password must be of minimum 6 characters</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Select Card Type</label>
+                    <select class="form-control" name="cardselect" [(ngModel)]="cardSelected">
+                        <option disabled hidden [value]="selectUndefinedOptionValue">-- Select --</option>
+                        <option *ngFor="let c of cardlist" [ngValue]="c.value">{{c.name}}</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="AccountNumber">AccountNo</label>
+                    <input type="text" required #AccountNumber="ngModel"
+                        [class.is-invalid]="AccountNumber.invalid && AccountNumber.touched" class="form-control"
+                        [(ngModel)]="userService.selectedUser.AccountNumber" name="AccountNumber" required
+                        style="display: inline;">
+                    <div>
+                        <small class="text-danger"
+                        [class.d-none]="AccountNumber.valid || AccountNumber.untouched">AccountNumber is
+                        required</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="EmailID">EmailID</label>
+                    <input type="email" #EmailID="ngModel" [class.is-invalid]="EmailID.invalid && EmailID.touched"
+                        class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                        [(ngModel)]="userService.selectedUser.EmailID" name="EmailID" required email
+                        style="display: inline;">
+                    <div *ngIf="EmailID.errors && (EmailID.invalid || EmailID.touched)">
+                        <small class="text-danger" [class.d-none]="EmailID.valid || EmailID.untouched"
+                            *ngIf="EmailID.errors.required">Email is required</small>
+                        <small class="text-danger" *ngIf="EmailID.errors.pattern">Enter valid Email</small>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="Address">Address</label>
+                    <input type="text" required #Address="ngModel"
+                        [class.is-invalid]="Address.invalid && Address.touched" class="form-control"
+                        [(ngModel)]="userService.selectedUser.Address" name="Address" required style="display: inline;">
+                    <div>
+                        <small class="text-danger" [class.d-none]="Address.valid || Address.untouched">Address is
+                            required</small>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="Phoneno">PhoneNo</label>
+                    <input type="tel" required #Phoneno="ngModel" pattern="^\d{10}$"
+                        [class.is-invalid]="Phoneno.invalid && Phoneno.touched" class="form-control"
+                        [(ngModel)]="userService.selectedUser.Phoneno" name="PhoneNo" required style="display: inline;">
+                    <div *ngIf="Phoneno.errors && (Phoneno.invalid || Phoneno.touched)">
+                        <small class="text-danger" [class.d-none]="Phoneno.valid || Phoneno.untouched"
+                            *ngIf="Phoneno.errors.required">Phone No is required</small>
+                        <small class="text-danger" *ngIf="Phoneno.errors.pattern">Phone No must be 10 digits</small>
+                    </div>
+                </div>
+                <div class="text-center"><br>
+                    <input type="submit" class="btn btn-success btn-block" value="Register"><br>
+                    <a routerLink="/Login">Already Registered? Login here</a>
+                </div>
+            </div>
+        </form>
+        <div class="success" *ngIf="showSuccessMessage">
+            Saved succesfully
+        </div>
+        <div class="alert" *ngIf="serverErrorMessage">
+            {{serverErrorMessage}}
+        </div>
+    </div>
+</div>

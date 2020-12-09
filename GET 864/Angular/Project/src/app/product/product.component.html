@@ -1,0 +1,77 @@
+<div class="text-center"><br>
+  <h3 class="display-4" style="text-align: center;"><i class="fa fa-shopping-cart"></i> Products</h3><br>
+  <input id="inputsearch" type="text" [(ngModel)]="searchTerm" class="fa"
+  placeholder="&#xF002; &nbsp; Search by Product Name" style="font-family: FontAwesome, Calibri; width: 85%; text-align: center;">
+</div>
+
+<div *ngIf="productdetails.length > 0">
+  <div class="text-center"><br>
+    <div *ngFor="let p of productdetails|productFilter:searchTerm" id="productcontainer" class="shadow p-3 mb-5 bg-white">
+      <img src="/assets/{{p.ImagePath}}" style="width: 181px; height: 130px; margin-right: auto; margin-left: auto;"><br>
+      <small style="text-align: center; font-family: Calibri;">{{p.ProductDetails}}</small><br><br>
+      <button type="button" class="btn btn-danger btn-block" [disabled]='!card[0]["ActivationStatus"]'
+        (click)="openModal(p.ProductID,p.ProductName,p.ProductDetails,p.Amount,p.ImagePath,p.ProcessingFee)"
+        data-toggle="modal" data-target="#myModal">
+        <b>Buy on EMI</b><br><small>Starting at &#x20B9;{{(p.Amount+p.ProcessingFee)/9 | number:'1.2-2'}}/month</small>
+      </button>
+      <hr>
+      <p><b>Price : </b>&#x20B9;{{p.Amount}}</p>
+    </div>
+  </div>
+</div>
+<br>
+<div *ngIf="!productdetails.length" class="shadow-lg" style="width: 50%; margin-left: auto; margin-right: auto; padding: 15px; background-color: whitesmoke;">
+  <img src="/assets/Images/Smiley.png" alt="Smiley" height="10%" width="10%" style="margin-left: auto; margin-right: auto;"><br>
+  <h4 style="font-family: Calibri;" class="text-center text-danger">Please pay your EMI to purchase more products !</h4>
+</div>
+
+
+
+
+<!-- The Modal -->
+<div class="modal" id="myModal" [ngClass]="{'show':showModal}">
+  <div class="modal-dialog">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header" style="background-color: lightgray;">
+        <h4 class="modal-title">Proceed for Payment</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">
+        <div style="width: 30%; float:left">
+          <img src="/assets/{{prod.img}}" width="120" height="85">
+        </div>
+
+        <div style="width: 70%; float:right">
+          <small><b>Product</b></small><br>
+          <p>{{prod.name}}</p>
+          <small><b>Features</b></small> <br>
+          <p>{{prod.details}}</p>
+          <small><b>Processing charges</b></small> <br>
+          <p>&#x20B9;{{prod.fee}}</p>
+          <small><b>Price</b></small> <br>
+          <p>&#x20B9;{{prod.amt}}</p>
+          <small><b>Select an EMI tenure </b></small><br>
+          <select class="form-control" style="width: 40%;" [(ngModel)]="schemeSelected">
+            <optgroup label="Installment Period">
+              <option disabled hidden [value]="selectUndefinedOptionValue">-- Select --</option>
+              <option *ngFor="let c of schemelist" [ngValue]="c.value">{{c.name}}</option>
+            </optgroup>
+          </select><br>
+        </div>
+      </div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer" style="background-color: lightgray;">
+        <p class="darkblue-rec" *ngIf="emi_permonth>0"><b>EMI Per Month</b>&#x20B9;{{emi_permonth | number:'1.2-2'}}</p>
+        <button type="button" class="btn btn-success" (click)="purchaseProduct()" data-dismiss="modal">Purchase</button>
+        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+      </div>
+
+    </div>
+  </div>
+</div>
+

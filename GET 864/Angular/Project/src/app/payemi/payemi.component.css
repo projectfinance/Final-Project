@@ -1,0 +1,12 @@
+tr:nth-child(even) {
+    background-color: #4b4b4b;
+}
+
+#divChart{
+    display: block;
+    width: 50%;
+    height: 50%;
+    margin-left: auto;
+    margin-right: auto;
+    background-color: white;
+}

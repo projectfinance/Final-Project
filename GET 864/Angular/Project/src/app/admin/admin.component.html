@@ -1,0 +1,74 @@
+<div class="admincontainer">
+    <table class="table table-hover table-bordered shadow-lg">
+        <thead class="thead-dark">
+            <tr>
+                <th>ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Phone</th>
+                <th>Email ID</th>
+                <th>Address</th>
+                <th>Account</th>
+                <th>Bank</th>
+                <th>Bank IFSC</th>
+                <th>Activation</th>
+    
+            </tr>
+        </thead>
+        <tbody *ngFor="let a of admindata">
+            <tr class="bg-light">
+                <td *ngIf="a.CustomerID != 26">{{a.CustomerID}}</td>
+                <td *ngIf="a.CustomerID != 26">{{a.Firstname}}</td>
+                <td *ngIf="a.CustomerID != 26">{{a.LastName}}</td>
+                <td *ngIf="a.CustomerID != 26">{{a.Phoneno}}</td>
+                <td *ngIf="a.CustomerID != 26">{{a.EmailID}}</td>
+                <td *ngIf="a.CustomerID != 26">{{a.Address}}</td>
+                <td *ngIf="a.CustomerID != 26">{{a.AccountNumber}}</td>
+                <td *ngIf="a.CustomerID != 26">{{a.BankName}}</td>
+                <td *ngIf="a.CustomerID != 26">{{a.BankIFSC}}</td>
+                <td class="text-center"><button *ngIf="a.ActivationStatus == 0" type="button" class="btn btn-primary"
+                        data-toggle="modal" data-target=".bd-example-modal-lg"
+                        (click)="ActivateID(a.CustomerID)">Activate</button>
+                    <span *ngIf="a.ActivationStatus == 1"><b><i class="fa fa-check"></i></b></span>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+
+
+<!--
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="text-center"><br>
+                Do you want to Activate User ?<br><br>
+                <button class="btn btn-success" data-dismiss="modal" (click)="ActivateYes()">Yes</button>&nbsp;<button
+                    class="btn btn-success" data-dismiss="modal" (click)="ActivateNo()">No</button><br><br>
+            </div>
+        </div>
+    </div>
+</div>
+-->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content">
+        <div class="modal-header" style="background-color: lightgray;">
+            <h5 class="modal-title">Activation Status</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <div class="modal-body">
+          <p style="text-align: center;">Do you want to Activate User ?</p>
+          <p style="text-align: center;">
+            <button class="btn btn-success" data-dismiss="modal" (click)="ActivateYes()">Yes</button>&nbsp;
+          <button class="btn btn-success" data-dismiss="modal" (click)="ActivateNo()">No</button>
+          </p>          
+        </div>
+      </div>
+    </div>
+  </div>

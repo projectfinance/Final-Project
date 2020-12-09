@@ -1,0 +1,25 @@
+<div class="card ml-auto mr-auto shadow mt-5" style="max-width: 540px;">
+  <div class="row no-gutters">
+    <div class="col-md-4">
+      <img src="assets/Images/Logo.jpg" class="card-img" alt="Logo">
+    </div>
+    <div class="col-md-8">
+      <div class="card-body">
+        <h5 class="card-title">{{card[0]["Firstname"]}} {{card[0]["LastName"]}}</h5>
+        <p class="card-text">Card Number : {{card[0]["CardID"]}} <br>Validity : {{card[0]["Validity"]|date:'medium'}} <br>Card Type :
+          {{card[0]["CardType"]}} <br>Total Credit : {{card[0]["RemainingCredit"]}}</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf='card[0]["ActivationStatus"]' class="card-footer text-white bg-success text-center font-weight-normal">Activated</div>
+  <div *ngIf='!card[0]["ActivationStatus"]' class="card-footer text-white bg-danger text-center font-weight-normal">Activation Pending</div>
+</div>
+
+<br><br>
+<div *ngIf='card[0]["ActivationStatus"]'>
+  <app-payemi></app-payemi>
+</div>
+<div *ngIf='!card[0]["ActivationStatus"]' class="shadow-lg" style="width: 50%; margin-left: auto; margin-right: auto; padding: 15px; background-color: whitesmoke;">
+  <img src="/assets/Images/Smiley.png" alt="Smiley" height="10%" width="10%" style="margin-left: auto; margin-right: auto;"><br>
+  <h4 style="font-family: Calibri;" class="text-center">Once your EMI Card is Activated, you will be able to purchase !</h4>
+</div>

@@ -1,0 +1,66 @@
+<div>
+    <div class="navbar navbar-expand-lg navbar-light bg-light">
+    <h3>Pay your EMI</h3>
+    <div style="margin-left: auto; padding:15px; font-weight: bold;color: rgb(207, 9, 9);">Total EMI Pending : &#x20B9;
+        {{totalleft}}</div>
+</div>
+
+<!--Graph-->
+<div style="background-color: white; padding: 10px">
+    <div id="divChart">
+        <canvas id="myChart"></canvas>
+    </div>    
+</div>
+
+<!--Purchase History Details-->
+<table *ngIf="purchasedetails.length > 0" cellpadding="5" class="table table-dark table-striped" style="width: fit-content;">
+    <thead class="bg-success">
+        <tr>
+            <th>ID</th>
+            <th>Product Details</th>
+            <th>Purchase Date</th>
+            <th>Emi Details</th>
+            <th>Emi Payable</th>
+            <th>Pay</th>
+        </tr>
+    </thead>
+
+    <tr *ngFor="let p of purchasedetails,let i=index">
+        <td>{{p.PurchaseID}}</td>
+        <td width="23%"><img src="/assets/{{p.ImagePath}}" width="102" height="77"><br>
+            <small align="justify">{{p.ProductDetails}}</small></td>
+        <td>{{p.PurchaseDate | date:'medium'}}</td>
+        <td>Installation Period : {{p.EmiScheme}} months <br> EMI/Month : &#x20B9;{{p.EmiPerMonth}}</td>
+        <td>EMI Paid : &#x20B9;{{p.EmiPaid}} <br>EMI Left : &#x20B9;{{p.EmiLeft}}</td>
+        <td>
+            <p *ngIf="p.PaidForMonth=='YES'" class="success-err">Paid for this Month</p>
+            <button *ngIf="p.PaidForMonth=='NO'" class="btn btn-danger btn-block"
+                (click)="give(p.PurchaseID,p.EmiPerMonth)" data-toggle="modal" data-target="#myModal">Pay Now</button>
+        </td>
+
+    </tr>
+</table>
+
+
+<!-- The Modal -->
+<div class="modal" id="myModal" [ngClass]="{'show':showModal}">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Do you want to pay EMI now?</h5>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+
+            <!-- Modal body -->
+            <div class="modal-body" style="text-align: center;">
+                <p>EMI Amount for this month is &#x20B9;&nbsp;{{emi_cost}} !</p>
+                <button type="button" class="btn btn-success" (click)="postPay()" data-dismiss="modal">Yes
+                    </button>&nbsp;&nbsp;
+                <button type="button" class="btn btn-success" data-dismiss="modal">No</button>
+            </div>
+
+        </div>
+    </div>
+</div>
